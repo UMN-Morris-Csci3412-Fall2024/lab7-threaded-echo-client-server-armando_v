@@ -18,6 +18,6 @@ public class EchoClient {
 		InputStream socketInputStream = socket.getInputStream();
 		OutputStream socketOutputStream = socket.getOutputStream();
 
-		// Put your code here.
+		
 	}
 }
