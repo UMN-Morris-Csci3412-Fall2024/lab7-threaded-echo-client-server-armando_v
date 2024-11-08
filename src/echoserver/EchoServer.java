@@ -16,17 +16,22 @@ public class EchoServer {
 
     private void start() throws IOException, InterruptedException {
         ServerSocket serverSocket = new ServerSocket(PORT_NUMBER);
+
+		//will accept the client connections
         while (true) {
             Socket clientSocket = serverSocket.accept();
-            Thread clientHandler = new Thread(() -> handleClient(clientSocket));
-            clientHandler.start();
+			//it creates a new thread for the client
+            Thread clientManage = new Thread(() -> ManagesClient(clientSocket));
+			//start the clients thread
+            clientManage.start();
         }
     }
-    private void handleClient(Socket clientSocket) {
+	//it manges the client that is connected
+    private void ManagesClient(Socket clientSocket) {
     try {
         InputStream input = clientSocket.getInputStream();
         OutputStream output = clientSocket.getOutputStream();
-
+		//goes back and forth with data to the clients 
         for (int byteData; (byteData = input.read()) != -1;) {
             if (byteData != -1) {
                 output.write(byteData);
