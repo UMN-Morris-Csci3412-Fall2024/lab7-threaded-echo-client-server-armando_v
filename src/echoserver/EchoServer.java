@@ -22,10 +22,23 @@ public class EchoServer {
             clientHandler.start();
         }
     }
-   
+    private void handleClient(Socket clientSocket) {
+    try {
+        InputStream input = clientSocket.getInputStream();
+        OutputStream output = clientSocket.getOutputStream();
 
-            clientSocket.close();
-        } catch (IOException e) {
+        for (int byteData; (byteData = input.read()) != -1;) {
+            if (byteData != -1) {
+                output.write(byteData);
+            } else {
+                break;
+            }
         }
+        output.flush(); 
+
+        clientSocket.close();
+
+    } catch (IOException e) {
     }
+}
 }

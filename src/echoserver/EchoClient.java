@@ -18,11 +18,29 @@ public class EchoClient {
         InputStream socketInputStream = socket.getInputStream();
         OutputStream socketOutputStream = socket.getOutputStream();
 
-    
+        goIntoServer(System.in, socketOutputStream);
+
+        socket.shutdownOutput();
+
+        gotByServer(socketInputStream, System.out);
+
         socket.close();
         socketInputStream.close();
         socketOutputStream.close();
     }
 
- 
+    private void goIntoServer(InputStream input, OutputStream output) throws IOException {
+    	for (int byteData = input.read(); byteData != -1; byteData = input.read()) {
+        	output.write(byteData);
+    }
+    output.flush(); 
+}
+
+	private void gotByServer(InputStream input, OutputStream output) throws IOException {
+    	for (int byteData = input.read(); byteData != -1; byteData = input.read()) {
+        	output.write(byteData);
+    }
+    output.flush(); 
+}
+
 }
